@@ -1,0 +1,24 @@
+<template name="lists">
+    <h2>Lists</h2>
+    {{> addList}}
+    <ul>
+        {{#if Template.subscriptionsReady}}
+        {{#each list}}
+        <li><a href="{{pathFor route='listPage'}}">{{name}}</a></li>
+        {{/each}}
+        {{else}}
+        <li>Loading...</li>
+        {{/if}}
+    </ul>
+</template>
+
+<template name="listPage">
+    <h2>Tasks: {{name}}</h2>
+    {{> todos}}
+</template>
+
+<template name="addList">
+    <form>
+        Create a list: <input type="text" placeholder="List name here..." name="listName"/>
+    </form>
+</template>

@@ -1,35 +1,7 @@
 <head>
     <title>Todos</title>
 </head>
-
-<body>
-
-</body>
-
-<template name="lists">
-    <h2>Lists</h2>
-    {{> addList}}
-    <ul>
-        {{#if Template.subscriptionsReady}}
-            {{#each list}}
-                <li><a href="{{pathFor route='listPage'}}">{{name}}</a></li>
-            {{/each}}
-        {{else}}
-            <li>Loading...</li>
-        {{/if}}
-    </ul>
-</template>
-
-<template name="listPage">
-    <h2>Tasks: {{name}}</h2>
-    {{> todos}}
-</template>
-
-<template name="addList">
-    <form>
-        Create a list: <input type="text" placeholder="List name here..." name="listName"/>
-    </form>
-</template>
+<body></body>
 
 <template name="main">
     <h1>Todos</h1>
@@ -56,54 +28,6 @@
 
 <template name="home">
     <h2>Welcome to the Todos Tutorial Application</h2>
-</template>
-
-<template name="register">
-    <h2>Register</h2>
-    <form class="register">
-        <p>Email: <input type="email" name="email"/></p>
-        <p>Password: <input type="password" name="password"/></p>
-        <p><input type="submit" value="Register"/></p>
-    </form>
-</template>
-
-<template name="login">
-    <h2>Login</h2>
-    <form class="login">
-        <p>Email: <input type="email" name="email" required="true"/></p>
-        <p>Password: <input type="password" name="password" required="true"/></p>
-        <p><input type="submit" value="Login"/></p>
-    </form>
-</template>
-
-<template name="todos">
-    {{_id}}
-    {{> addTodo}}
-    <ul>
-        {{#each todo}}
-            {{> todoItem}}
-        {{/each}}
-    </ul>
-    {{> todosCount}}
-</template>
-
-<template name="todoItem">
-    <li class="{{checked}}">
-        <input type="checkbox" {{checked}} />
-        <input type="text" name="todoItem" value="{{name}}"/> [<a href="#" class="delete-todo">Delete</a>]
-    </li>
-</template>
-
-<template name="addTodo">
-    <form>
-        Create a task: <input type="text" placeholder="Type a task here..." name="todoName"/>
-    </form>
-</template>
-
-<template name="todosCount">
-    {{#if totalTodos}}
-        <p>You have completed {{completedTodos}} out of {{totalTodos}} tasks.</p>
-    {{/if}}
 </template>
 
 <template name="loading">
