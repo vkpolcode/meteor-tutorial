@@ -33,8 +33,8 @@ Template.addList.events({
     'submit form': function (event) {
         event.preventDefault();
         var listName = $('[name=listName]').val();
-        Meteor.call('createNewList', listName, function(error, results) {
-            if(error) {
+        Meteor.call('createNewList', listName, function (error, results) {
+            if (error) {
                 console.log(error.reason);
             } else {
                 Router.go('listPage', {_id: results});
@@ -50,7 +50,7 @@ Template.todoItem.events({
         var documentId = this._id;
         var confirm = window.confirm("Delete this task '" + this.name + "' ?");
         if (confirm) {
-            Todos.remove({_id: documentId});
+            Meteor.call('removeListItem', documentId);
         }
     },
     'keyup [name="todoItem"]': function (event) {
@@ -59,17 +59,13 @@ Template.todoItem.events({
         } else {
             var documentId = this._id;
             var todoItem = $(event.target).val();
-            Todos.update({_id: documentId}, {$set: {name: todoItem}});
+            Meteor.call('updateListItem', documentId, todoItem);
         }
     },
     'change [type=checkbox]': function () {
         var documentId = this._id;
         var isCompleted = this.completed;
-        if (isCompleted) {
-            Todos.update({_id: documentId}, {$set: {completed: false}});
-        } else {
-            Todos.update({_id: documentId}, {$set: {completed: true}});
-        }
+        Meteor.call('changeListItemStatus', documentId, !isCompleted);
     }
 });
 
@@ -78,17 +74,13 @@ Template.addTodo.events({
         event.preventDefault();
         var todoName = $('[name="todoName"]').val();
         var currentList = this._id;
-        var currentUser = Meteor.userId();
-        if (todoName.length > 0) {
-            Todos.insert({
-                name: todoName,
-                completed: false,
-                createdAt: new Date(),
-                createdBy: currentUser,
-                listId: currentList
-            });
-            $('[name="todoName"]').val('');
-        }
+        Meteor.call('createListItem', todoName, currentList, function (error, results) {
+            if (error) {
+                console.log(error.reason);
+            } else {
+                $('[name="todoName"]').val('');
+            }
+        });
     }
 });
 
